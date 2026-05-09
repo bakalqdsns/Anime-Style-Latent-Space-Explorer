@@ -1,0 +1,49 @@
+# ─── Python ────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.so
+.Python
+.env
+.venv
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ─── Node ────────────────────────────────────────────────────────────────
+node_modules/
+.npm
+.yarn/
+.pnp.*
+.pnp
+frontend/node_modules/
+
+# ─── Data (large, generated) ─────────────────────────────────────────────
+data/frames/
+data/cache/
+data/output/
+data/raw/
+*.npy
+*.npz
+
+# ─── Environment ─────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─── IDE ─────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# ─── Logs ────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ─── Temporary ───────────────────────────────────────────────────────────
+*.tmp
+.cache/

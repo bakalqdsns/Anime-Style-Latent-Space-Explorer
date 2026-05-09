@@ -1,0 +1,154 @@
+{
+  "axes": [
+    {
+      "category": "COLOR",
+      "name": "warm",
+      "prompt_positive": "warm color palette anime, orange red yellow tones, golden hour lighting",
+      "prompt_negative": "cold blue gray tones anime",
+      "description": "暖色调 — 橙红黄色调，夕阳/黄金时段氛围"
+    },
+    {
+      "category": "COLOR",
+      "name": "cold",
+      "prompt_positive": "cold color palette anime, blue cyan gray tones, night scene, moonlit",
+      "prompt_negative": "warm orange red tones anime",
+      "description": "冷色调 — 蓝青色调，夜间/月光场景"
+    },
+    {
+      "category": "COLOR",
+      "name": "neon",
+      "prompt_positive": "neon glowing anime, cyberpunk vivid colors, electric blue pink, night city lights",
+      "prompt_negative": "muted natural color anime",
+      "description": "霓虹色 — 赛博朋克霓虹灯，鲜艳电光色"
+    },
+    {
+      "category": "COLOR",
+      "name": "pastel",
+      "prompt_positive": "pastel soft color anime, gentle watercolor tones, soft pastel palette, dreamy",
+      "prompt_negative": "saturated vivid color anime",
+      "description": "马卡龙色 — 柔和粉彩，水彩质感，梦幻氛围"
+    },
+    {
+      "category": "COLOR",
+      "name": "low_saturation",
+      "prompt_positive": "desaturated muted color anime, grayscale film look, muted tones, vintage anime",
+      "prompt_negative": "vivid saturated color anime",
+      "description": "低饱和 — 褪色/灰调，复古胶片质感"
+    },
+
+    {
+      "category": "LIGHTING",
+      "name": "cinematic_light",
+      "prompt_positive": "cinematic anime lighting, dramatic volumetric light, movie still quality, film lighting",
+      "prompt_negative": "flat evenly lit anime",
+      "description": "电影光 — 戏剧性体积光，电影感打光"
+    },
+    {
+      "category": "LIGHTING",
+      "name": "soft_light",
+      "prompt_positive": "soft diffused light anime, gentle shadows, overcast day lighting, natural ambient",
+      "prompt_negative": "harsh direct light anime",
+      "description": "柔光 — 散射柔光，自然环境光"
+    },
+    {
+      "category": "LIGHTING",
+      "name": "hard_shadow",
+      "prompt_positive": "hard edge shadows anime, dramatic chiaroscuro, sharp shadow lines, noir lighting",
+      "prompt_negative": "no shadow soft lit anime",
+      "description": "硬阴影 — 明暗对比强烈，黑色电影光影"
+    },
+    {
+      "category": "LIGHTING",
+      "name": "rim_light",
+      "prompt_positive": "rim light anime, glowing edge highlights, backlit anime, silhouette with highlights",
+      "prompt_negative": "no rim light flat anime",
+      "description": "轮廓光 — 边缘发光，背光剪影"
+    },
+    {
+      "category": "LIGHTING",
+      "name": "film_grain",
+      "prompt_positive": "film grain texture anime, analog lo-fi look, grainy texture, vintage 16mm film",
+      "prompt_negative": "clean digital anime",
+      "description": "胶片颗粒 — 模拟胶片颗粒，复古质感"
+    },
+
+    {
+      "category": "COMPOSITION",
+      "name": "negative_space",
+      "prompt_positive": "empty negative space anime composition, minimalist framing, vast empty background",
+      "prompt_negative": "crowded busy composition anime",
+      "description": "留白构图 — 大量负空间，极简构图"
+    },
+    {
+      "category": "COMPOSITION",
+      "name": "dutch_angle",
+      "prompt_positive": "dutch angle tilted frame anime, dramatic oblique angle, canted camera, tension",
+      "prompt_negative": "level horizon anime",
+      "description": "斜角构图 — 荷兰式倾斜，戏剧性透视"
+    },
+    {
+      "category": "COMPOSITION",
+      "name": "centered",
+      "prompt_positive": "symmetric centered composition anime, centered subject, balanced framing",
+      "prompt_negative": "asymmetric composition anime",
+      "description": "中心构图 — 对称居中，平衡稳定"
+    },
+    {
+      "category": "COMPOSITION",
+      "name": "wide_shot",
+      "prompt_positive": "wide establishing shot anime, vast landscape, environmental storytelling, epic scale",
+      "prompt_negative": "close up tight frame anime",
+      "description": "全景 — 大远景，广阔环境，宏大尺度"
+    },
+    {
+      "category": "COMPOSITION",
+      "name": "close_up",
+      "prompt_positive": "extreme close up anime face, intimate detail, tight frame, emotional focus",
+      "prompt_negative": "wide establishing shot anime",
+      "description": "特写 — 面部特写，情感聚焦"
+    },
+
+    {
+      "category": "DIRECTING",
+      "name": "experimental",
+      "prompt_positive": "experimental anime, abstract visual, avant-garde, unconventional framing, art film style",
+      "prompt_negative": "conventional narrative anime",
+      "description": "实验性 — 抽象视觉，前卫艺术风格"
+    },
+    {
+      "category": "DIRECTING",
+      "name": "cinematic",
+      "prompt_positive": "cinematic anime movie still, film quality composition, dramatic scene, theatrical",
+      "prompt_negative": "animation quality anime",
+      "description": "电影感 — 电影级画面质量，剧场感"
+    },
+    {
+      "category": "DIRECTING",
+      "name": "melancholic",
+      "prompt_positive": "melancholic sad atmosphere anime, emotional solitude, quiet sadness, rain, melancholia",
+      "prompt_negative": "energetic happy anime",
+      "description": "忧郁感 — 悲伤氛围，静谧孤独，雨景"
+    },
+    {
+      "category": "DIRECTING",
+      "name": "surreal",
+      "prompt_positive": "surreal dreamlike anime, impossible space, dream logic, surrealism, hallucinatory",
+      "prompt_negative": "realistic grounded anime",
+      "description": "超现实 — 梦幻逻辑，不可能的透视，超现实主义"
+    },
+    {
+      "category": "DIRECTING",
+      "name": "energetic",
+      "prompt_positive": "dynamic high energy anime action scene, motion blur, speed lines, explosive action",
+      "prompt_negative": "static quiet scene anime",
+      "description": "高能动态 — 动感模糊，速度线，爆发动作"
+    },
+    {
+      "category": "DIRECTING",
+      "name": "shaft_like",
+      "prompt_positive": "SHAFT anime style, unusual camera angles, head tilts, text overlays, disorienting composition",
+      "prompt_negative": "standard conventional anime directing",
+      "description": "SHAFT 风格 — 非传统镜头角度，人物歪头，文字叠加"
+    }
+  ]
+}
