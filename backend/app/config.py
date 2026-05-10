@@ -61,7 +61,12 @@ class Settings(BaseSettings):
     hdbscan_min_samples: int = 10
 
     # CORS
-    cors_origins: list[str] = ["http://localhost:5173", "http://localhost:3000"]
+    cors_origins: list[str] = [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:3000",
+        "http://127.0.0.1:5174",
+    ]
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
