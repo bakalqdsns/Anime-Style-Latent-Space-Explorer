@@ -20,7 +20,7 @@ class ImageAnalyzeResponse(BaseModel):
 
 
 class SimilarFrameInResponse(BaseModel):
-    id: UUID
+    id: str
     path: Optional[str] = None
     anime: Optional[str] = None
     score: float

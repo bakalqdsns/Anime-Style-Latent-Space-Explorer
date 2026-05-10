@@ -1,16 +1,24 @@
 """
 Anime Visual Language Engine — FastAPI Application Entry Point.
 """
+import json
+import logging
+import traceback
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
 
 from app.config import get_settings
 from app.db.database import init_db, close_db
 from app.api import analyze, style, search, frames, prompt, embeddings
+
+# Configure uvicorn logger to show full tracebacks
+uvicorn_logger = logging.getLogger("uvicorn.error")
+uvicorn_logger.setLevel(logging.DEBUG)
 
 
 settings = get_settings()
@@ -56,6 +64,28 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    @app.middleware("http")
+    async def log_errors(request: Request, call_next):
+        try:
+            response = await call_next(request)
+            if response.status_code >= 400:
+                body = b""
+                async for chunk in response.body_iterator:
+                    body += chunk
+                uvicorn_logger.error(
+                    f"HTTP {response.status_code} on {request.method} {request.url}\n"
+                    f"Body: {body.decode(errors='replace')}"
+                )
+                return JSONResponse(
+                    status_code=response.status_code,
+                    content=json.loads(body) if body else {"detail": "error"},
+                )
+            return response
+        except Exception as exc:
+            tb = traceback.format_exc()
+            uvicorn_logger.error(f"Unhandled exception on {request.method} {request.url}\n{tb}")
+            return JSONResponse(status_code=500, content={"detail": str(exc)})
+
     # Mount static files (for serving keyframe images)
     frames_dir = settings.data_frames_dir
     if frames_dir.exists():
@@ -68,6 +98,16 @@ def create_app() -> FastAPI:
     app.include_router(frames.router)
     app.include_router(prompt.router)
     app.include_router(embeddings.router)
+
+    # Global exception handler — print full traceback for all unhandled errors
+    @app.exception_handler(Exception)
+    async def global_exception_handler(request: Request, exc: Exception):
+        tb = traceback.format_exc()
+        uvicorn_logger.error(f"Unhandled exception on {request.method} {request.url}\n{tb}")
+        return JSONResponse(
+            status_code=500,
+            content={"detail": str(exc)},
+        )
 
     @app.get("/", tags=["root"])
     async def root():

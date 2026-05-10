@@ -3,8 +3,10 @@ Database connection and session management.
 Supports both SQLite (dev) and PostgreSQL (production).
 """
 from contextlib import asynccontextmanager
-from typing import AsyncGenerator
+from typing import Any, AsyncGenerator, TYPE_CHECKING
 
+from sqlalchemy import Float, TypeDecorator, JSON
+from sqlalchemy.dialects.postgresql import ARRAY as PG_ARRAY
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     async_sessionmaker,
@@ -12,6 +14,30 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.pool import NullPool
+
+if TYPE_CHECKING:
+    from sqlalchemy import Dialect
+
+
+class FloatArray(TypeDecorator):
+    """
+    A list of floats column type.
+    Uses ARRAY(Float) on PostgreSQL, JSON-encoded list on SQLite.
+    """
+    impl = JSON
+    cache_ok = True
+
+    def load_dialect_impl(self, dialect: "Dialect"):
+        if dialect.name == "postgresql":
+            return dialect.type_descriptor(PG_ARRAY(Float))
+        return dialect.type_descriptor(JSON())
+
+    def process_bind_param(self, value: Any, dialect: "Dialect") -> Any:
+        return value
+
+    def process_result_value(self, value: Any, dialect: "Dialect") -> Any:
+        return value
+
 
 from app.config import get_settings
 

@@ -19,8 +19,8 @@ class StyleAxisCreate(StyleAxisBase):
 
 
 class StyleAxisRead(StyleAxisBase):
-    id: UUID
-    created_at: datetime
+    id: Optional[UUID] = None
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
@@ -32,9 +32,9 @@ class StyleAxisListResponse(BaseModel):
 
 
 class StyleProjectionRead(BaseModel):
-    id: UUID
-    keyframe_id: UUID
-    style_axis_id: UUID
+    id: str
+    keyframe_id: str
+    style_axis_id: str
     axis_name: str
     axis_category: str
     score: float
@@ -45,29 +45,29 @@ class StyleProjectionRead(BaseModel):
 
 
 class StyleProjectionsResponse(BaseModel):
-    keyframe_id: UUID
-    projections: dict[str, float]  # {axis_name: score}
-    categories: dict[str, dict[str, float]]  # {category: {axis_name: score}}
+    keyframe_id: str
+    projections: dict[str, float]
+    categories: dict[str, dict[str, float]]
 
 
 class StyleSpaceFrame(BaseModel):
-    id: UUID
+    id: str
     x: float
     y: float
     z: Optional[float] = None
     anime: Optional[str] = None
     studio: Optional[str] = None
-    cluster_id: Optional[UUID] = None
+    cluster_id: Optional[str] = None
     cluster_color: Optional[str] = None
     path: Optional[str] = None
 
 
 class StyleSpaceCluster(BaseModel):
-    id: UUID
+    id: str
     name: Optional[str] = None
     color: Optional[str] = None
     size: int
-    representative_frame_id: Optional[UUID] = None
+    representative_frame_id: Optional[str] = None
 
 
 class StyleSpaceResponse(BaseModel):

@@ -37,15 +37,26 @@ async def list_axes():
     try:
         initialize_style_axes()
     except FileNotFoundError:
-        raise HTTPException(status_code=500, detail="Style axes not initialized.")
+        raise HTTPException(status_code=500, detail="Style axes config not found.")
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to initialize style axes: {e}",
+        )
 
-    axes = get_all_axes()
-    categories = get_categories()
+    try:
+        axes = get_all_axes()
+        categories = get_categories()
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to load style axes: {e}",
+        )
 
     return StyleAxisListResponse(
         axes=[
             StyleAxisRead(
-                id="",  # Will be filled from DB if needed
+                id=None,
                 category=ax.category,
                 name=ax.name,
                 prompt_positive=ax.prompt_positive,
@@ -96,35 +107,34 @@ async def get_style_space(
     Get the full style space for visualization.
     Returns all frame positions in 3D UMAP space.
     """
-    store = get_vector_store()
-
-    # Search with no vector = return all (Qdrant scroll)
-    # For now, return empty if Qdrant has no data
     frames: list[StyleSpaceFrame] = []
     clusters: list[StyleSpaceCluster] = []
 
-    if store.is_available:
-        # Use scroll to get all points
-        try:
-            results, _ = store._client.scroll(
-                collection_name=store.collection_name,
-                limit=limit,
-                with_vectors=False,
-            )
-            for r in results:
-                payload = r.payload or {}
-                frames.append(StyleSpaceFrame(
-                    id=payload.get("keyframe_id", str(r.id)),
-                    x=payload.get("umap_x", 0.0),
-                    y=payload.get("umap_y", 0.0),
-                    z=payload.get("umap_z", 0.0),
-                    anime=payload.get("anime"),
-                    studio=payload.get("studio"),
-                    cluster_id=payload.get("cluster_id"),
-                    cluster_color=payload.get("cluster_color"),
-                    path=payload.get("path"),
-                ))
-        except Exception:
-            pass
+    try:
+        store = get_vector_store()
+        if store.is_available:
+            try:
+                results, _ = store._client.scroll(
+                    collection_name=store.collection_name,
+                    limit=limit,
+                    with_vectors=False,
+                )
+                for r in results:
+                    payload = r.payload or {}
+                    frames.append(StyleSpaceFrame(
+                        id=payload.get("keyframe_id", str(r.id)),
+                        x=payload.get("umap_x", 0.0),
+                        y=payload.get("umap_y", 0.0),
+                        z=payload.get("umap_z", 0.0),
+                        anime=payload.get("anime"),
+                        studio=payload.get("studio"),
+                        cluster_id=payload.get("cluster_id"),
+                        cluster_color=payload.get("cluster_color"),
+                        path=payload.get("path"),
+                    ))
+            except Exception as e:
+                pass
+    except Exception:
+        pass
 
     return StyleSpaceResponse(frames=frames, clusters=clusters, total=len(frames))

@@ -34,7 +34,9 @@ def load_dinov2(model_name: str = "facebook/dinov2-vitl14") -> torch.nn.Module:
     global _dinov2_model, _dinov2_device
     if _dinov2_model is None:
         _dinov2_device = _get_device()
-        _dinov2_model = torch.hub.load("facebookresearch/dinov2", model_name)
+        # Strip "facebook/" prefix and convert "dinov2-vitl14" -> "dinov2_vitl14" for hubconf
+        hub_name = model_name.split("/")[-1].replace("-", "_")
+        _dinov2_model = torch.hub.load("facebookresearch/dinov2", hub_name)
         _dinov2_model.to(_dinov2_device)
         _dinov2_model.eval()
     return _dinov2_model

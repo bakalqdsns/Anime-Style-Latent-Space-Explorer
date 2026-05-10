@@ -81,6 +81,15 @@ class Settings(BaseSettings):
             if isinstance(val, Path) and not val.is_absolute():
                 setattr(self, attr, project_root / val)
 
+        # Resolve SQLite database path to absolute
+        if self.database_url.startswith("sqlite"):
+            prefix = "sqlite+aiosqlite:///"
+            db_path = self.database_url[len(prefix):]
+            db_path_obj = Path(db_path)
+            if not db_path_obj.is_absolute():
+                abs_db_path = project_root / db_path
+                self.database_url = prefix + str(abs_db_path.resolve())
+
     @property
     def qdrant_enabled(self) -> bool:
         """Check if Qdrant is configured and reachable."""

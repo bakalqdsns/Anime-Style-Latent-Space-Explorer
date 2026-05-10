@@ -103,12 +103,21 @@ def initialize_style_axes(
             pass
 
     if direction_vectors is None:
-        pos_emb = aligner.encode_text(pos_texts)  # (N, 768)
+        try:
+            pos_emb = aligner.encode_text(pos_texts)  # (N, 768)
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to encode positive prompts with CLIP. "
+                f"Make sure CLIP model is downloaded: {e}"
+            )
 
         neg_emb_list = []
         for neg_text in neg_texts:
             if neg_text.strip():
-                neg_emb_list.append(aligner.encode_text(neg_text.strip()).squeeze())
+                try:
+                    neg_emb_list.append(aligner.encode_text(neg_text.strip()).squeeze())
+                except Exception:
+                    neg_emb_list.append(np.zeros(aligner.clip_dim))
             else:
                 neg_emb_list.append(np.zeros(aligner.clip_dim))
 
